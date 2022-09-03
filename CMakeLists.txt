@@ -22,6 +22,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include/)
 
 add_library(${PROJECT_NAME}
     src/LogLevel.cc
+    src/LogMessage.cc
 )
 
 string(TOUPPER ${CMAKE_BUILD_TYPE} BUILD_TYPE)

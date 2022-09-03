@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cstring>
+#include <array>
 
 namespace tinylog
 {
@@ -32,10 +33,15 @@ namespace tinylog
         {
         }
 
+        const char* data() const { return ptr_; }
         int size() const { return length_; }
-
+        bool empty() const { return length_ == 0; }
         const char *begin() const { return ptr_; }
         const char *end() const { return ptr_ + length_; }
+
+        std::string str() const { return std::string(data(), size()); }
+
+        char operator[](int i) const { return ptr_[i]; }
 
         void remove_prefix(size_t n)
         {
@@ -75,6 +81,16 @@ namespace tinylog
         {
             return ((length_ == x.length_) &&
                     (memcmp(ptr_, x.ptr_, length_) == 0));
+        }
+
+        size_t rfind(char c) const
+        {
+            for (auto i = size(); i-- > 0;)
+            {
+                if ( (*this)[i] == c)
+                    return i;
+            }
+            return std::string::npos;
         }
 
     private:
