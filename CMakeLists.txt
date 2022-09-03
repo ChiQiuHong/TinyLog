@@ -21,6 +21,7 @@ find_package(GTest MODULE REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 
 add_library(${PROJECT_NAME}
+    src/LogCategory.cc
     src/LogLevel.cc
     src/LogMessage.cc
 )
