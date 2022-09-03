@@ -21,9 +21,10 @@ find_package(GTest MODULE REQUIRED)
 include_directories(${PROJECT_SOURCE_DIR}/include/)
 
 add_library(${PROJECT_NAME}
-    src/LogCategory.cc
+    # src/LogCategory.cc
     src/LogLevel.cc
-    src/LogMessage.cc
+    # src/LogMessage.cc
+    src/LogName.cc
 )
 
 string(TOUPPER ${CMAKE_BUILD_TYPE} BUILD_TYPE)
@@ -36,3 +37,11 @@ target_link_libraries(loglevel_test
     ${PROJECT_NAME}
 )
 gtest_discover_tests(loglevel_test)
+
+add_executable(logname_test src/test/LogNameTest.cc)
+target_link_libraries(logname_test
+    ${GTEST_LIBRARIES}
+    ${GTEST_MAIN_LIBRARIES}
+    ${PROJECT_NAME}
+)
+gtest_discover_tests(logname_test)

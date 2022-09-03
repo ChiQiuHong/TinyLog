@@ -33,11 +33,14 @@ namespace tinylog
         {
         }
 
-        const char* data() const { return ptr_; }
+        const char *data() const { return ptr_; }
         int size() const { return length_; }
         bool empty() const { return length_ == 0; }
         const char *begin() const { return ptr_; }
         const char *end() const { return ptr_ + length_; }
+
+        const char &front() { return *ptr_; }
+        const char &back() { return *(ptr_ + length_ - 1); }
 
         std::string str() const { return std::string(data(), size()); }
 
@@ -55,20 +58,24 @@ namespace tinylog
         bool startsWith(const StringPiece &other) const
         {
             return size() >= other.size() &&
-                subpiece(0, other.size()) == other;
+                   subpiece(0, other.size()) == other;
         }
 
         /**
          * Does this StringPiece end with another StringPiece?
          */
-        bool endsWith(const StringPiece& other) const
+        bool endsWith(const StringPiece &other) const
         {
             return size() >= other.size() &&
-                subpiece(size() - other.size()) == other;
+                   subpiece(size() - other.size()) == other;
         }
 
         void subtract(size_t n)
         {
+            if (n > size())
+            {
+                // TODO
+            }
             length_ -= n;
         }
 
@@ -77,7 +84,7 @@ namespace tinylog
             return StringPiece(ptr_ + first, std::min(length, size() - first));
         }
 
-        bool operator==(const StringPiece& x) const
+        bool operator==(const StringPiece &x) const
         {
             return ((length_ == x.length_) &&
                     (memcmp(ptr_, x.ptr_, length_) == 0));
@@ -87,10 +94,21 @@ namespace tinylog
         {
             for (auto i = size(); i-- > 0;)
             {
-                if ( (*this)[i] == c)
+                if ((*this)[i] == c)
                     return i;
             }
             return std::string::npos;
+        }
+
+        void uncheckedAdvance(size_t n)
+        {
+            ptr_ += n;
+            length_ -= n;
+        }
+
+        void uncheckedSubtract(size_t n)
+        {
+            length_ -= n;
         }
 
     private:
