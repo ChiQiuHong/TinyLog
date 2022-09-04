@@ -1,0 +1,11 @@
+add_executable(atfork_test AtForkTest.cc)
+target_link_libraries(atfork_test system_libs glog::glog)
+gtest_discover_tests(atfork_test)
+
+add_executable(threadId_test ThreadIdTest.cc)
+target_link_libraries(threadId_test system_libs)
+gtest_discover_tests(threadId_test)
+
+add_executable(threadName_test ThreadNameTest.cc)
+target_link_libraries(threadName_test system_libs)
+gtest_discover_tests(threadName_test)
